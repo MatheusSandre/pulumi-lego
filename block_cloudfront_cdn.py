@@ -65,6 +65,7 @@ class CDN:
             enabled=True,
             price_class=price_class,
             origins=cdn_origins,
+            default_root_object="index.html",
             custom_error_responses=behaviors["custom_responses"],
             default_cache_behavior=behaviors["default"],
             ordered_cache_behaviors=behaviors["ordered"],

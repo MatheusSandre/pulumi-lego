@@ -157,7 +157,7 @@ class Service:
                 }
             ],
             network_configuration={
-                "assignPublicIp": False,
+                "assignPublicIp": True,
                 "securityGroups": [ecs_sg],
                 "subnets": vpc["privateSubnetIDs"]
             },
