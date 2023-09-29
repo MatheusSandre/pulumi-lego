@@ -3,11 +3,8 @@ from aws_alb import LoadBalancer as AwsLoadBalancer
 
 class LoadBalancer:
     @staticmethod
-    def create_lb(prefix, service_name, project_name, environment, is_internal, vpc, certificate_arn, health_check_path, app_port):
-        tags = {
-            "Environment": environment,
-            "Service": project_name
-        }
+    def create_lb(prefix, service_name, project_name, environment, is_internal, vpc, certificate_arn, health_check_path, app_port, tags):
+
         resource_name = f"{prefix}{service_name}"
 
         alb_sg = EC2.create_security_group(

@@ -12,11 +12,8 @@ class Opensearch:
     def create_domain(prefix, service_name, project_name, environment, cluster_config, engine_version,
                       cognito_options, ebs_options, logs_enabled, custom_endpoint,
                       custom_endpoint_certificate_arn, custom_endpoint_enabled, cf_zone_id,
-                      route53_zone_id, dns_type):
-        tags = {
-            "Environment": environment,
-            "Service": project_name
-        }
+                      route53_zone_id, dns_type, tags):
+
         resource_name = f"{prefix}{service_name}"
 
         search_logs = Cloudwatch.create_log_group(f"/aws/aes/domains/{resource_name}/search-logs")

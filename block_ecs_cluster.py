@@ -3,11 +3,7 @@ from aws_ecs import ECS
 
 class ECSCluster:
     @staticmethod
-    def create_cluster(prefix, project_name, environment):
-        tags = {
-            "Environment": environment,
-            "Service": project_name
-        }
+    def create_cluster(prefix, project_name, tags):
 
         resource_name = f"{prefix}{project_name}"
 

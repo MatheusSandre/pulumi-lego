@@ -3,11 +3,8 @@ from aws_elasticache import Elasticache
 
 class Redis:
     @staticmethod
-    def create_resource(prefix, redis_name, service_name, project_name, environment, vpc, engine_version, node_type, num_nodes, num_replicas, parameter_group):
-        tags = {
-            "Environment": environment,
-            "Service": service_name
-        }
+    def create_resource(prefix, redis_name, service_name, project_name, environment, vpc, engine_version, node_type, num_nodes, num_replicas, parameter_group, tags):
+
         resource_name = f"{prefix}{project_name}"
 
         redis_subnet_group = Elasticache.create_subnet_group(

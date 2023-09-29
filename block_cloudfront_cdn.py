@@ -4,11 +4,7 @@ from aws_cloudfront import Cloudfront
 
 class CDN:
     @staticmethod
-    def create_cdn(prefix, project_name, environment, certificate, origins, log_bucket, aliases, behaviors, price_class):
-        tags = {
-            "Environment": environment,
-            "Service": project_name
-        }
+    def create_cdn(prefix, project_name, environment, certificate, origins, log_bucket, aliases, behaviors, price_class, tags):
 
         resource_name = f"{prefix}{project_name}"
 

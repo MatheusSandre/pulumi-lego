@@ -3,11 +3,7 @@ from aws_cloudfront import Cloudfront
 
 class S3Cloudfront:
     @staticmethod
-    def create_resources(project_name, s3_cors_rules, environment, prefix):
-        tags = {
-            "Environment": environment,
-            "Service": project_name
-        }
+    def create_resources(project_name, s3_cors_rules, environment, prefix, tags):
 
         resource_name = f"{prefix}{project_name}"
 

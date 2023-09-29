@@ -15,12 +15,7 @@ class Worker:
     @staticmethod
     def create_worker(cluster, prefix, project_name, service_name, cpu, memory, environment,
                       vpc, policies_roles, container_definitions_json, volume, service_discovery,
-                      ignore_container_definitions_changes, circuit_breaker_enabled):
-
-        tags = {
-            "Environment": environment,
-            "Service": project_name
-        }
+                      ignore_container_definitions_changes, circuit_breaker_enabled, tags):
 
         resource_name = f"{prefix}{service_name}"
 

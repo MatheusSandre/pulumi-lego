@@ -8,11 +8,8 @@ from aws_ec2 import EC2
 class LambdaFunction:
     @staticmethod
     def create_function(prefix, function_name, project_name, environment, timeout, memory_size, variables, vpc, version_name, git_branch,
-                        git_repo, main_path, aws_region, policies_roles, codestar_arn, sns_notification_arn, s3_codepipeline):
-        tags = {
-            "Environment": environment,
-            "Service": project_name
-        }
+                        git_repo, main_path, aws_region, policies_roles, codestar_arn, sns_notification_arn, s3_codepipeline, tags):
+
         resource_name = f"{prefix}{project_name}"
 
         function_role = IAM.create_role(

@@ -4,11 +4,8 @@ from aws_sqs import SQS
 
 class Queues:
     @staticmethod
-    def create_queues(prefix, service_name, project_name, environment, queues):
-        tags = {
-            "Environment": environment,
-            "Service": service_name
-        }
+    def create_queues(prefix, service_name, project_name, environment, queues, tags):
+
         resource_name = f"{prefix}{project_name}"
 
         resources=[]
