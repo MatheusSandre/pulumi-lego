@@ -99,6 +99,7 @@ class Service:
             task_role_arn=ecs_task_role.arn,
             execution_role_arn=policies_roles["ecs_task_execution_role"],
             container_definitions=container_definitions_json,
+            volumes = volumes,
             ignore_container_definitions_changes=ignore_container_definitions_changes
         )
 
