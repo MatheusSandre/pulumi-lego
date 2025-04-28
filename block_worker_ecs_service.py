@@ -46,7 +46,7 @@ class Worker:
                         "owner_gid": user_id,
                         "permissions": "750",
                     }
-                }
+                },
                 tags=tags
             )
 
