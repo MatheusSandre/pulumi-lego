@@ -15,7 +15,7 @@ class Worker:
     @staticmethod
     def create_worker(cluster, prefix, project_name, service_name, cpu, memory, environment,
                       vpc, policies_roles, container_definitions_json, volume, service_discovery,
-                      ignore_container_definitions_changes, circuit_breaker_enabled, tags):
+                      ignore_container_definitions_changes, circuit_breaker_enabled, tags, public_ip=False):
 
         resource_name = f"{prefix}{service_name}"
 
@@ -138,7 +138,7 @@ class Worker:
             propagate_tags="SERVICE",
             enable_execute_command=True,
             network_configuration={
-                "assignPublicIp": False,
+                "assignPublicIp": public_ip,
                 "securityGroups": [ecs_sg],
                 "subnets": vpc["privateSubnetIDs"]
             },
