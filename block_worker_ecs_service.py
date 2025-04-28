@@ -15,7 +15,7 @@ class Worker:
     @staticmethod
     def create_worker(cluster, prefix, project_name, service_name, cpu, memory, environment,
                       vpc, policies_roles, container_definitions_json, volume, service_discovery,
-                      ignore_container_definitions_changes, circuit_breaker_enabled, tags, public_ip=False):
+                      ignore_container_definitions_changes, circuit_breaker_enabled, tags, public_ip=False, user_id=0):
 
         resource_name = f"{prefix}{service_name}"
 
@@ -32,21 +32,38 @@ class Worker:
                 subnet_id=vpc["privateSubnetIDs"][0]
             )
 
+            efs_ap = EFS.create_accesspoint(
+                name=f"{resource_name}-efs-ap",
+                file_system_id=volume_efs.id,
+                posix_user={
+                    "uid": user_id,
+                    "gid": user_id,
+                },
+                root_directory={
+                    "path": "/",
+                    "creation_info": {
+                        "owner_uid": user_id,
+                        "owner_gid": user_id,
+                        "permissions": "750",
+                    }
+                }
+                tags=tags
+            )
+
             volumes = [
                 {
                     "name": f"{resource_name}-efs",
-                    "host": None,
-                    "dockerVolumeConfiguration": None,
                     "efsVolumeConfiguration": {
-                        "transitEncryptionPort": None,
                         "fileSystemId": volume_efs.id,
                         "authorizationConfig": {
-                            "iam": "DISABLED",
-                            "accessPointId": None},
-                        "transitEncryption": "DISABLED",
-                        "rootDirectory": "/"}
+                            "accessPointId": efs_ap.id,
+                            "iam": "DISABLED"
+                        },
+                        "rootDirectory": "/"
+                    }
                 }
             ]
+
         else:
             volumes = []
 
