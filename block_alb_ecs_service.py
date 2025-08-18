@@ -16,7 +16,7 @@ class Service:
     def create_service(cluster, prefix, project_name, service_name, cpu, memory, environment,
                        vpc, policies_roles, alb, app_port, container_definitions_json, volume,
                        service_discovery, ignore_container_definitions_changes,
-                       circuit_breaker_enabled, public_ip = False):
+                       circuit_breaker_enabled, public_ip=False):
 
         tags = {
             "Environment": environment,
