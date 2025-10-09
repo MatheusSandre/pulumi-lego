@@ -13,11 +13,13 @@ aws_region = pulumi.Config('aws').get('region')
 
 class Worker:
     @staticmethod
-    def create_worker(cluster, prefix, project_name, service_name, cpu, memory, environment,
-                      vpc, policies_roles, container_definitions_json, volume, service_discovery,
-                      ignore_container_definitions_changes, circuit_breaker_enabled, tags, public_ip=False, user_id=0):
+    def create_worker(cluster, prefix, service_name, cpu, memory,
+                       vpc, policies_roles, container_definitions_json, volume,
+                       service_discovery, ignore_container_definitions_changes,
+                       circuit_breaker_enabled, tags, public_ip=False):
 
         resource_name = f"{prefix}{service_name}"
+
 
         if volume == True:
             volume_efs = EFS.create_filesystem(
@@ -70,6 +72,7 @@ class Worker:
             }
         else:
             service_registries=None
+
 
         ecs_task_role = IAM.create_role(
             name=f"{resource_name}-role",
