@@ -7,6 +7,9 @@ class DNS:
     @staticmethod
     def create_resources(app_url, cf_zone_id, route53_zone_id, dns_type, dns_value):
 
+        if not cf_zone_id and not route53_zone_id:
+            return
+
         if cf_zone_id:
             CF_DNS.create_record(
                 name=app_url,

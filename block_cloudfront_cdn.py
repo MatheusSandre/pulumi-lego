@@ -40,8 +40,9 @@ class CDN:
                 dict = aws.cloudfront.DistributionOriginArgs(
                     domain_name=origin["dns"],
                     origin_id=f"{origin['type']}-{resource_name}-{origin['name']}",
+                    origin_access_control_id=origin["access_control_id"],
                     s3_origin_config=aws.cloudfront.DistributionOriginS3OriginConfigArgs(
-                        origin_access_identity=origin["access_identity"],
+                        origin_access_identity="",
                     ),
                 )
                 cdn_origins.append(dict)
@@ -74,4 +75,4 @@ class CDN:
             tags=tags
         )
 
-        return distribution.domain_name
+        return distribution

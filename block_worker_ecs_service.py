@@ -16,9 +16,19 @@ class Worker:
     def create_worker(cluster, prefix, service_name, cpu, memory,
                        vpc, policies_roles, container_definitions_json, volume,
                        service_discovery, ignore_container_definitions_changes,
-                       circuit_breaker_enabled, tags, public_ip=False):
+                       circuit_breaker_enabled, tags, public_ip=False,
+                       capacity_provider_strategies=None):
 
         resource_name = f"{prefix}{service_name}"
+
+        if capacity_provider_strategies is None:
+            capacity_provider_strategies = [
+                {
+                    "capacityProvider": "FARGATE_SPOT",
+                    "base": 0,
+                    "weight": 3
+                }
+            ]
 
 
         if volume == True:
@@ -145,16 +155,11 @@ class Worker:
                 "securityGroups": [ecs_sg],
                 "subnets": vpc["privateSubnetIDs"]
             },
-            capacity_provider_strategies=[
-                {
-                    "capacityProvider": "FARGATE_SPOT",
-                    "base": 0,
-                    "weight": 3
-                }
-            ],
+            capacity_provider_strategies=capacity_provider_strategies,
             service_registries=service_registries,
             deployment_minimum_healthy_percent=100,
             deployment_maximum_percent=200,
+            force_new_deployment=True,
             tags=tags
         )
 
@@ -189,7 +194,7 @@ class Worker:
 
         service_values = {
             "sg": ecs_sg,
-            "iam_role": ecs_task_role.arn
+            "iam_role": ecs_task_role
         }
 
         return service_values
